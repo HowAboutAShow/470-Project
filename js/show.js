@@ -11,6 +11,7 @@ function requestShow(pickupLocation) {
     var scifi = document.getElementById("scifi");
     var scifiSelection = scifi.options[scifi.selectedIndex].text;
     //var str = comedy + drama + action + scifi;
+    move(true);
     $.ajax({
         method: 'POST',
         url: _config.api.invokeUrl + '/api',
@@ -50,7 +51,10 @@ function requestShow(pickupLocation) {
 }
 
 function completeRequest(result) {
+    move(false);
     console.log("Response received ", result);
+//    window.alert('I found some!!!');
+//    window.location = 'results.html';
     /*var unicorn;
     var pronoun;
     console.log('Response received from API: ', result);
@@ -89,4 +93,26 @@ function completeRequest(result) {
 
 function displayUpdate(text) {
     $('#updates').append($('<li>' + text + '</li>'));
+}
+
+function move(starting) {
+
+    if(starting){
+        document.getElementById('myBar').innerHTML = '10%';
+        document.getElementById('myBar').style.width = '10%';
+    }
+    else {
+      var elem = document.getElementById("myBar");   
+      var width = 10;
+      var id = setInterval(frame, 10);
+      function frame() {
+        if (width >= 100) {
+          clearInterval(id);
+        } else {
+          width++; 
+          elem.style.width = width + '%'; 
+          elem.innerHTML = width * 1  + '%';
+        }
+      }
+    }
 }
