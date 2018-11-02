@@ -3,23 +3,41 @@
 function requestShow(pickupLocation) {
     console.log('executed');
     var comedy = document.getElementById("comedy");
+    var comSelection = comedy.options[comedy.selectedIndex].text;
     var drama = document.getElementById("drama");
+    var dramaSelection = drama.options[drama.selectedIndex].text;
     var action = document.getElementById("action");
+    var actionSelection = action.options[action.selectedIndex].text;
     var scifi = document.getElementById("scifi");
-    var str = comedy + drama + action + scifi;
+    var scifiSelection = scifi.options[scifi.selectedIndex].text;
+    //var str = comedy + drama + action + scifi;
     $.ajax({
-        method: 'GET',
+        method: 'POST',
         url: _config.api.invokeUrl + '/api',
         headers: {
             Authorization: 'IvAwgUkhii67Tnv8jjlZBae27wwPXecs4u1E7OCX',
             //Ratings: str,
         },
-        /*data: JSON.stringify({
-            PickupLocation: {
-                Latitude: pickupLocation.latitude,
-                Longitude: pickupLocation.longitude
-            }
-        }),*/
+        data: JSON.stringify({
+            genres: [
+                {
+                    genre: "Comedy",
+                    rating: comSelection
+                },
+                {
+                    genre: "Drama",
+                    rating: dramaSelection
+                },
+                {
+                    genre: "Action",
+                    rating: actionSelection
+                },
+                {
+                    genre: "Scifi",
+                    rating: scifiSelection
+                }
+            ]
+        }),
         contentType: 'application/json',
         success: completeRequest,
         error: function ajaxError(jqXHR, textStatus, errorThrown) {
@@ -32,6 +50,7 @@ function requestShow(pickupLocation) {
 }
 
 function completeRequest(result) {
+    console.log("Response received ", result);
     /*var unicorn;
     var pronoun;
     console.log('Response received from API: ', result);
