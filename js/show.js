@@ -42,10 +42,6 @@ function requestShow(pickupLocation) {
     var fantasySelection = fantasy.options[fantasy.selectedIndex].text;
     var fantasyI = document.getElementById("fantasyImp");
     var fantasyImportance = fantasyI.options[fantasyI.selectedIndex].text;
-    var filmNoir = document.getElementById("film_noir");
-    var filmNoirSelection = filmNoir.options[filmNoir.selectedIndex].text;
-    var filmNoirI = document.getElementById("film_noirImp");
-    var filmNoirImportance = filmNoirI.options[filmNoirI.selectedIndex].text;
     var history = document.getElementById("history");
     var historySelection = history.options[history.selectedIndex].text;
     var historyI = document.getElementById("historyImp");
@@ -92,8 +88,9 @@ function requestShow(pickupLocation) {
     var westernImportance = westernI.options[westernI.selectedIndex].text;
     var scifi = document.getElementById("scifi");
     var scifiSelection = scifi.options[scifi.selectedIndex].text;
+    var scifiI = document.getElementById("scifiImp");
+    var scifiImportance = scifiI.options[scifiI.selectedIndex].text;
     //var str = comedy + drama + action + scifi;
-    move(true);
     $.ajax({
         method: 'POST',
         url: _config.api.invokeUrl + '/api',
@@ -120,7 +117,7 @@ function requestShow(pickupLocation) {
                 },
                 {
                     genre: "Adventure",
-                    rating: scifiSelection,
+                    rating: adventureSelection,
                     importance: adventureImportance
                 },
                 {
@@ -147,11 +144,6 @@ function requestShow(pickupLocation) {
                     genre: "Family",
                     rating: familySelection,
                     importance: familyImportance
-                },
-                {
-                    genre: "Film Noir",
-                    rating: filmNoirSelection,
-                    importance: filmNoirImportance
                 },
                 {
                     genre: "History",
@@ -216,7 +208,7 @@ function requestShow(pickupLocation) {
             ]
         }),
         contentType: 'application/json',
-        success: completeRequest,
+        success: move,
         error: function ajaxError(jqXHR, textStatus, errorThrown) {
             //console.error('Error requesting ride: ', textStatus, ', Details: ', errorThrown);
             //console.error('Response: ', jqXHR.responseText);
@@ -227,10 +219,12 @@ function requestShow(pickupLocation) {
 }
 
 function completeRequest(result) {
-    move(false);
     console.log("Response received ", result);
-//    window.alert('I found some!!!');
-//    window.location = 'results.html';
+    hash = JSON.parse(result);
+    url = 'results.html#';
+    url = url + hash;
+//    window.location = url;
+    console.log(url);
     /*var unicorn;
     var pronoun;
     console.log('Response received from API: ', result);
@@ -271,24 +265,19 @@ function displayUpdate(text) {
     $('#updates').append($('<li>' + text + '</li>'));
 }
 
-function move(starting) {
-
-    if(starting){
-        document.getElementById('myBar').innerHTML = '10%';
-        document.getElementById('myBar').style.width = '10%';
+function move(result) {
+  var elem = document.getElementById("myBar");   
+  var width = 10;
+  var id = setInterval(frame, 10);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+        completeRequest(result);
+    } else {
+      width++; 
+      elem.style.width = width + '%'; 
+      elem.innerHTML = width * 1  + '%';
     }
-    else {
-      var elem = document.getElementById("myBar");   
-      var width = 10;
-      var id = setInterval(frame, 10);
-      function frame() {
-        if (width >= 100) {
-          clearInterval(id);
-        } else {
-          width++; 
-          elem.style.width = width + '%'; 
-          elem.innerHTML = width * 1  + '%';
-        }
-      }
-    }
+  }
+    
 }
