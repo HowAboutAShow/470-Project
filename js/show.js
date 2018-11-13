@@ -220,10 +220,12 @@ function requestShow(pickupLocation) {
 
 function completeRequest(result) {
     console.log("Response received ", result);
-    hash = JSON.parse(result);
+    movies = result;
+    sessionStorage.setItem('movies', JSON.stringify(movies));
+//    hash = result['result'];
     url = 'results.html#';
-    url = url + hash;
-//    window.location = url;
+//    url = url + hash;
+    window.location = url;
     console.log(url);
     /*var unicorn;
     var pronoun;
