@@ -292,7 +292,7 @@ function showAjax(title, i) {
         success: function(data) {
             var result = data.imdbID;
             var rating = data.imdbRating;
-            document.getElementById(i).innerHTML = title;
+            document.getElementById(i).innerHTML = title.replace(/[{'+'}]/g,' ');
             document.getElementById(i).href = 'https://imdb.com/title/'+result;
             document.getElementById(i+'rating').innerHTML = ': ' + rating;
         },
