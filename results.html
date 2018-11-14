@@ -9,15 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="main.css">
     
-    <script>
-    movies = JSON.parse(sessionStorage.getItem('movies'))['result'].replace(/[{()}]/g, '').replace(/[{''}]/g, '').split(',')
-
-        
-    
-    console.log(movies[0]);
-    </script>
-    
-    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="js/show.js"></script>
     <body>
 
     <!-- Navbar -->
@@ -49,19 +42,32 @@
     <div class="w3-row-padding w3-padding-64 w3-container">
       <div class="w3-content">
         <div class="w3-twothird" id = 'shows'>
+            <h2 class='w3-padding'><a id='1'></a><a id='1rating'></a></h2>
+            <h2 class='w3-padding'><a id='2'></a><a id='2rating'></a></h2>
+            <h2 class='w3-padding'><a id='3'></a><a id='3rating'></a></h2>
+            <h2 class='w3-padding'><a id='4'></a><a id='4rating'></a></h2>
+            <h2 class='w3-padding'><a id='5'></a><a id='5rating'></a></h2>
+            <h2 class='w3-padding'><a id='6'></a><a id='6rating'></a></h2>
+            <h2 class='w3-padding'><a id='7'></a><a id='7rating'></a></h2>
+            <h2 class='w3-padding'><a id='8'></a><a id='8rating'></a></h2>
+            <h2 class='w3-padding'><a id='9'></a><a id='9rating'></a></h2>
+            <h2 class='w3-padding'><a id='10'></a><a id='10rating'></a></h2>
+            
             <script>
                 if( movies != null){
-                    //var data = sessionStorage.getItem('movies')
-                    document.getElementById("shows").innerHTML = sessionStorage.getItem("movies");
+                    for (i = 1; i < movies.length; i++) { 
+                        if (i == 11) { break; }
+                        showAjax(movies[i-1], i);
+                    }
                 }
             </script>
-            
-            Need to put some shows here.
         </div>
 
+<!--
         <div class="w3-third w3-center">
           Here's some pics of the show
         </div>
+-->
       </div>
     </div>
         

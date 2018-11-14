@@ -222,11 +222,10 @@ function completeRequest(result) {
     console.log("Response received ", result);
     movies = result;
     sessionStorage.setItem('movies', JSON.stringify(movies));
-//    hash = result['result'];
     url = 'results.html#';
-//    url = url + hash;
     window.location = url;
     console.log(url);
+    
     /*var unicorn;
     var pronoun;
     console.log('Response received from API: ', result);
@@ -283,3 +282,26 @@ function move(result) {
   }
     
 }
+
+function showAjax(title, i) {
+    title = title.replace(/[{' '}]/g,'+');
+    $.ajax({
+        method: 'GET',
+        dataType: 'json',
+        url: 'http://www.omdbapi.com/?t=' + title + '&apikey=98eef2d0',
+        success: function(data) {
+            var result = data.imdbID;
+            var rating = data.imdbRating;
+            document.getElementById(i).innerHTML = title;
+            document.getElementById(i).href = 'https://imdb.com/title/'+result;
+            document.getElementById(i+'rating').innerHTML = ': ' + rating;
+        },
+        error: function ajaxError(jqXHR, textStatus, errorThrown) {
+            //console.error('Error requesting ride: ', textStatus, ', Details: ', errorThrown);
+            //console.error('Response: ', jqXHR.responseText);
+            //alert('An error occured when requesting your unicorn:\n' + jqXHR.responseText);
+        }
+    });
+}
+
+movies = JSON.parse(sessionStorage.getItem('movies'))['result'].replace(/[{()}]/g, '').replace(/[{''}]/g, '').split(',')
