@@ -294,7 +294,12 @@ function showAjax(title, i) {
             var rating = data.imdbRating;
             document.getElementById(i).innerHTML = title.replace(/[{'+'}]/g,' ');
             document.getElementById(i).href = 'https://imdb.com/title/'+result;
-            document.getElementById(i+'rating').innerHTML = ': ' + rating;
+            if(rating == 'N/A' || rating == null) {
+                document.getElementById(i+'rating').innerHTML = ': Rating Unavailable';
+            }
+            else {
+                document.getElementById(i+'rating').innerHTML = ': ' + rating;
+            }
         },
         error: function ajaxError(jqXHR, textStatus, errorThrown) {
             //console.error('Error requesting ride: ', textStatus, ', Details: ', errorThrown);
