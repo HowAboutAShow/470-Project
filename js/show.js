@@ -181,11 +181,6 @@ function requestShow(pickupLocation) {
                     importance: sportsImportance
                 },
                 {
-                    genre: "Superhero",
-                    rating: superHeroSelection,
-                    importance: superHeroImportance
-                },
-                {
                     genre: "Thriller",
                     rating: thrillerSelection,
                     importance: thrillerImportance
