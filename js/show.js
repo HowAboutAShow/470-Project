@@ -181,7 +181,7 @@ function requestShow(pickupLocation) {
                     importance: sportsImportance
                 },
                 {
-                    genre: "Super Hero",
+                    genre: "Super",
                     rating: superHeroSelection,
                     importance: superHeroImportance
                 },
@@ -201,7 +201,7 @@ function requestShow(pickupLocation) {
                     importance: westernImportance
                 },
                 {
-                    genre: "Sci Fi",
+                    genre: "Sci",
                     rating: scifiSelection,
                     importance: scifiImportance
                 }
