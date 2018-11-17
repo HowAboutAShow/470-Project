@@ -224,7 +224,6 @@ function completeRequest(result) {
     sessionStorage.setItem('movies', JSON.stringify(movies));
     url = 'results.html#';
     window.location = url;
-    console.log(url);
     
     /*var unicorn;
     var pronoun;
@@ -283,17 +282,20 @@ function move(result) {
     
 }
 
-function showAjax(title, i) {
-    title = title.replace(/[{' '}]/g,'+');
+function showAjax(tuple, i) {
+    // title (is a string): "('Bose: Dead/Alive', 'tt6883044')('Nobel', 'tt4591834')('Tabula Rasa', 'tt5197860')('The K2', 'tt5966882')('Bajo sospecha', 'tt3825328')
+    var title = tuple[0].replace(/[{' '}]/g,'+');
+    var id = tuple[1].replace(/[{' '}]/g,'');
+
     $.ajax({
         method: 'GET',
         dataType: 'json',
         url: 'http://www.omdbapi.com/?t=' + title + '&apikey=98eef2d0',
         success: function(data) {
-            var result = data.imdbID;
             var rating = data.imdbRating;
             document.getElementById(i).innerHTML = title.replace(/[{'+'}]/g,' ');
-            document.getElementById(i).href = 'https://imdb.com/title/'+result;
+            document.getElementById(i).href = 'https://imdb.com/title/'+id;
+            
             if(rating == 'N/A' || rating == null) {
                 document.getElementById(i+'rating').innerHTML = ': Rating Unavailable';
             }
@@ -302,11 +304,20 @@ function showAjax(title, i) {
             }
         },
         error: function ajaxError(jqXHR, textStatus, errorThrown) {
-            //console.error('Error requesting ride: ', textStatus, ', Details: ', errorThrown);
-            //console.error('Response: ', jqXHR.responseText);
-            //alert('An error occured when requesting your unicorn:\n' + jqXHR.responseText);
         }
     });
 }
 
-movies = JSON.parse(sessionStorage.getItem('movies'))['result'].replace(/[{()}]/g, '').replace(/[{''}]/g, '').split(',')
+function startUp(){
+    movies = JSON.parse(sessionStorage.getItem('movies'))['result'];
+    movies = movies.replace(/[{()}]/g, '');
+    movies = movies.split('\'\'');
+
+    for (i = 0; i < movies.length; i++) { 
+        movie = movies[i];
+        movie = movie.replace(/[{\'}]/g, '');
+        movie = movie.split(',');
+
+        movies[i] = movie;
+    }
+}

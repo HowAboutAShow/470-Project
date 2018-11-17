@@ -54,7 +54,9 @@
             <h2 class='w3-padding'><a id='10'></a><a id='10rating'></a></h2>
             
             <script>
-                if( movies != null){
+                
+                startUp();
+                if(movies != null){
                     for (i = 1; i < movies.length; i++) { 
                         if (i == 11) { break; }
                         showAjax(movies[i-1], i);
