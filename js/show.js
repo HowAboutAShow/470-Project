@@ -70,10 +70,10 @@ function requestShow(pickupLocation) {
     var sportsSelection = sports.options[sports.selectedIndex].text;
     var sportsI = document.getElementById("sportsImp");
     var sportsImportance = sportsI.options[sportsI.selectedIndex].text;
-    var superHero = document.getElementById("superHero");
+    /*var superHero = document.getElementById("superHero");
     var superHeroSelection = superHero.options[superHero.selectedIndex].text;
     var superHeroI = document.getElementById("superHeroImp");
-    var superHeroImportance = superHeroI.options[superHeroI.selectedIndex].text;
+    var superHeroImportance = superHeroI.options[superHeroI.selectedIndex].text;*/
     var thriller = document.getElementById("thriller");
     var thrillerSelection = thriller.options[thriller.selectedIndex].text;
     var thrillerI = document.getElementById("thrillerImp");
@@ -181,11 +181,6 @@ function requestShow(pickupLocation) {
                     importance: sportsImportance
                 },
                 {
-                    genre: "Super Hero",
-                    rating: superHeroSelection,
-                    importance: superHeroImportance
-                },
-                {
                     genre: "Thriller",
                     rating: thrillerSelection,
                     importance: thrillerImportance
@@ -201,7 +196,7 @@ function requestShow(pickupLocation) {
                     importance: westernImportance
                 },
                 {
-                    genre: "Sci Fi",
+                    genre: "Scifi",
                     rating: scifiSelection,
                     importance: scifiImportance
                 }
