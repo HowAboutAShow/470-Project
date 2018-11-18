@@ -1,5 +1,26 @@
 /*global _config*/
 
+function requestMore() {
+    console.log('executed');
+    $.ajax({
+        method: 'POST',
+        url: 'https://6c1u98yjzd.execute-api.us-east-2.amazonaws.com/prod' + '/moreshows',
+        headers: {
+            Authorization: 'IvAwgUkhii67Tnv8jjlZBae27wwPXecs4u1E7OCX',
+        },
+        data: JSON.stringify({
+                id: "none",
+                rating: "none",
+                importance: "none"
+        }),
+        contentType: 'application/json',
+        //success: move,
+        error: function ajaxError(jqXHR, textStatus, errorThrown) {
+        }
+    });
+    console.log('after ajax');
+}
+
 function requestShow(pickupLocation) {
     console.log('executed');
     var comedy = document.getElementById("comedy");
@@ -213,6 +234,7 @@ function requestShow(pickupLocation) {
     console.log('after ajax');
 }
 
+
 function completeRequest(result) {
     console.log("Response received ", result);
     movies = result;
@@ -316,3 +338,4 @@ function startUp(){
         movies[i] = movie;
     }
 }
+
