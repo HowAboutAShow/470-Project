@@ -14,7 +14,7 @@ function requestMore() {
                 importance: "none"
         }),
         contentType: 'application/json',
-        //success: move,
+        success: completeRequest(result),
         error: function ajaxError(jqXHR, textStatus, errorThrown) {
         }
     });
@@ -144,7 +144,7 @@ function requestShow(pickupLocation) {
                 {
                     genre: "Animation",
                     rating: animationSelection,
-                    importance: adventureImportance
+                    importance: animationImportance
                 },
                 {
                     genre: "Biography",
