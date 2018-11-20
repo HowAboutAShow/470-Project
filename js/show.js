@@ -2,23 +2,40 @@
 
 function requestMore() {
     console.log('executed');
-    $.ajax({
-        method: 'POST',
-        url: 'https://6c1u98yjzd.execute-api.us-east-2.amazonaws.com/prod' + '/moreshows',
-        headers: {
-            Authorization: 'IvAwgUkhii67Tnv8jjlZBae27wwPXecs4u1E7OCX',
-        },
-        data: JSON.stringify({
-                id: "none",
-                rating: "none",
-                importance: "none"
-        }),
-        contentType: 'application/json',
-        //success: completeRequest(result),
-        error: function ajaxError(jqXHR, textStatus, errorThrown) {
-        }
-    });
-    console.log('after ajax');
+    
+    // The movie IDs to make a request for
+    var moviesToCheck = [];
+    
+    for(i = 1; i < 11; i++) {
+        if(document.getElementById(i).childNodes[0].checked){
+            moviesToCheck.push(i);
+        }    
+    }
+    
+    // Checking each ID given
+    for (i in moviesToCheck){
+        rank = moviesToCheck[i];
+        id = sessionStorage[rank];
+        console.log(id);
+        
+        $.ajax({
+            method: 'POST',
+            url: 'https://6c1u98yjzd.execute-api.us-east-2.amazonaws.com/prod' + '/moreshows',
+            headers: {
+                Authorization: 'IvAwgUkhii67Tnv8jjlZBae27wwPXecs4u1E7OCX',
+            },
+            data: JSON.stringify({
+                    id: "none",
+                    rating: "none",
+                    importance: "none"
+            }),
+            contentType: 'application/json',
+            //success: completeRequest(result),
+            error: function ajaxError(jqXHR, textStatus, errorThrown) {
+            }
+        });
+        console.log('after ajax');
+    }
 }
 
 function requestShow(pickupLocation) {
@@ -332,6 +349,7 @@ function showAjax(tuple, i) {
 function startUp(){
     movies = JSON.parse(sessionStorage.getItem('movies'))['result'];
     movies = movies.replace(/[{()}]/g, '');
+    movies = movies.replace(/[{\"}]/g, '\'');
     movies = movies.split('\'\'');
     
     sessionStorage.removeItem('ids');
