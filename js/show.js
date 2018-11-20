@@ -310,8 +310,22 @@ function showAjax(tuple, i) {
         url: 'http://www.omdbapi.com/?t=' + title + '&apikey=98eef2d0',
         success: function(data) {
             var rating = data.imdbRating;
-            document.getElementById(i).innerHTML = title.replace(/[{'+'}]/g,' ');
-            document.getElementById(i).href = 'https://imdb.com/title/'+id;
+            var place = document.getElementById(i).childNodes[1];
+            
+            place.innerHTML = title.replace(/[{'+'}]/g,' ');
+            place.href = 'https://imdb.com/title/'+id;
+            
+            ids = sessionStorage.getItem('ids');
+            
+            if(ids === null) {
+                ids = [];
+                ids.push(id);
+                sessionStorage.setItem('ids',ids);
+            }
+            else {
+                ids.push(id);
+                sessionStorage.setItem('ids',ids);
+            }
             
             if(rating == 'N/A' || rating == null) {
                 document.getElementById(i+'rating').innerHTML = ': Rating Unavailable';
@@ -329,7 +343,9 @@ function startUp(){
     movies = JSON.parse(sessionStorage.getItem('movies'))['result'];
     movies = movies.replace(/[{()}]/g, '');
     movies = movies.split('\'\'');
-
+    
+    sessionStorage.removeItem('ids');
+    
     for (i = 0; i < movies.length; i++) { 
         movie = movies[i];
         movie = movie.replace(/[{\'}]/g, '');

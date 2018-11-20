@@ -42,16 +42,16 @@
     <div class="w3-row-padding w3-padding-64 w3-container">
       <div class="w3-content">
         <div class="w3-twothird" id = 'shows'>
-            <h2 class='w3-padding'><input type="checkbox" name="show" value="1"><a id='1'></a><a id='1rating'></a></h2>
-            <h2 class='w3-padding'><input type="checkbox" name="show" value="2"><a id='2'></a><a id='2rating'></a></h2>
-            <h2 class='w3-padding'><input type="checkbox" name="show" value="3"><a id='3'></a><a id='3rating'></a></h2>
-            <h2 class='w3-padding'><input type="checkbox" name="show" value="4"><a id='4'></a><a id='4rating'></a></h2>
-            <h2 class='w3-padding'><input type="checkbox" name="show" value="5"><a id='5'></a><a id='5rating'></a></h2>
-            <h2 class='w3-padding'><input type="checkbox" name="show" value="6"><a id='6'></a><a id='6rating'></a></h2>
-            <h2 class='w3-padding'><input type="checkbox" name="show" value="7"><a id='7'></a><a id='7rating'></a></h2>
-            <h2 class='w3-padding'><input type="checkbox" name="show" value="8"><a id='8'></a><a id='8rating'></a></h2>
-            <h2 class='w3-padding'><input type="checkbox" name="show" value="9"><a id='9'></a><a id='9rating'></a></h2>
-            <h2 class='w3-padding'><input type="checkbox" name="show" value="10"><a id='10'></a><a id='10rating'></a></h2>
+            <h2 class='w3-padding' id='1'><input type="checkbox" name="show" value="1"><a></a><a id='1rating'></a></h2>
+            <h2 class='w3-padding' id='2'><input type="checkbox" name="show" value="2"><a></a><a id='2rating'></a></h2>
+            <h2 class='w3-padding' id='3'><input type="checkbox" name="show" value="3"><a></a><a id='3rating'></a></h2>
+            <h2 class='w3-padding' id='4'><input type="checkbox" name="show" value="4"><a></a><a id='4rating'></a></h2>
+            <h2 class='w3-padding' id='5'><input type="checkbox" name="show" value="5"><a></a><a id='5rating'></a></h2>
+            <h2 class='w3-padding' id='6'><input type="checkbox" name="show" value="6"><a></a><a id='6rating'></a></h2>
+            <h2 class='w3-padding' id='7'><input type="checkbox" name="show" value="7"><a></a><a id='7rating'></a></h2>
+            <h2 class='w3-padding' id='8'><input type="checkbox" name="show" value="8"><a></a><a id='8rating'></a></h2>
+            <h2 class='w3-padding' id='9'><input type="checkbox" name="show" value="9"><a></a><a id='9rating'></a></h2>
+            <h2 class='w3-padding' id='10'><input type="checkbox" name="show" value="10"><a></a><a id='10rating'></a></h2>
 
             <div class="w3-row-padding w3-padding-32 w3-container w3-center">
                 <script type="text/javascript" src="js/show.js"></script>
@@ -59,15 +59,17 @@
             </div>
             
             
-            <script>
-                
+            <script>    
                 startUp();
+                
                 if(movies != null){
                     for (i = 1; i <= movies.length; i++) { 
                         if (i == 11) { break; }
                         showAjax(movies[i-1], i);
                     }
                 }
+                var meep = sessionStorage['ids'];
+                console.log(meep);
             </script>
         </div>
 
