@@ -315,17 +315,7 @@ function showAjax(tuple, i) {
             place.innerHTML = title.replace(/[{'+'}]/g,' ');
             place.href = 'https://imdb.com/title/'+id;
             
-            ids = sessionStorage.getItem('ids');
-            
-            if(ids === null) {
-                ids = [];
-                ids.push(id);
-                sessionStorage.setItem('ids',ids);
-            }
-            else {
-                ids.push(id);
-                sessionStorage.setItem('ids',ids);
-            }
+            sessionStorage.setItem(i, id);
             
             if(rating == 'N/A' || rating == null) {
                 document.getElementById(i+'rating').innerHTML = ': Rating Unavailable';
