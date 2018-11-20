@@ -14,7 +14,7 @@ function requestMore() {
                 importance: "none"
         }),
         contentType: 'application/json',
-        success: completeRequest(result),
+        //success: completeRequest(result),
         error: function ajaxError(jqXHR, textStatus, errorThrown) {
         }
     });
