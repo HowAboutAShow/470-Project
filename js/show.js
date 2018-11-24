@@ -23,14 +23,14 @@ function requestMore() {
             url: 'https://6c1u98yjzd.execute-api.us-east-2.amazonaws.com/prod' + '/moreshows',
             headers: {
                 Authorization: 'IvAwgUkhii67Tnv8jjlZBae27wwPXecs4u1E7OCX',
-            },
+            }, //id: sessionStorage[6],
             data: JSON.stringify({
-                    id: "none",
+                    id: id,
                     rating: "none",
                     importance: "none"
             }),
             contentType: 'application/json',
-            //success: completeRequest(result),
+            success: move2,
             error: function ajaxError(jqXHR, textStatus, errorThrown) {
             }
         });
@@ -108,10 +108,6 @@ function requestShow(pickupLocation) {
     var sportsSelection = sports.options[sports.selectedIndex].text;
     var sportsI = document.getElementById("sportsImp");
     var sportsImportance = sportsI.options[sportsI.selectedIndex].text;
-    /*var superHero = document.getElementById("superHero");
-    var superHeroSelection = superHero.options[superHero.selectedIndex].text;
-    var superHeroI = document.getElementById("superHeroImp");
-    var superHeroImportance = superHeroI.options[superHeroI.selectedIndex].text;*/
     var thriller = document.getElementById("thriller");
     var thrillerSelection = thriller.options[thriller.selectedIndex].text;
     var thrillerI = document.getElementById("thrillerImp");
@@ -128,13 +124,12 @@ function requestShow(pickupLocation) {
     var scifiSelection = scifi.options[scifi.selectedIndex].text;
     var scifiI = document.getElementById("scifiImp");
     var scifiImportance = scifiI.options[scifiI.selectedIndex].text;
-    //var str = comedy + drama + action + scifi;
+    
     $.ajax({
         method: 'POST',
         url: _config.api.invokeUrl + '/api',
         headers: {
             Authorization: 'IvAwgUkhii67Tnv8jjlZBae27wwPXecs4u1E7OCX',
-            //Ratings: str,
         },
         data: JSON.stringify({
             genres: [
@@ -259,41 +254,7 @@ function completeRequest(result) {
     url = 'results.html#';
     window.location = url;
     
-    /*var unicorn;
-    var pronoun;
-    console.log('Response received from API: ', result);
-    unicorn = result.Unicorn;
-    pronoun = unicorn.Gender === 'Male' ? 'his' : 'her';
-    displayUpdate(unicorn.Name + ', your ' + unicorn.Color + ' unicorn, is on ' + pronoun + ' way.');
-    animateArrival(function animateCallback() {
-        displayUpdate(unicorn.Name + ' has arrived. Giddy up!');
-        WildRydes.map.unsetLocation();
-        $('#request').prop('disabled', 'disabled');
-        $('#request').text('Set Pickup');
-    });*/
 }
-
-// Register click handler for #request button
-/*$(function onDocReady() {
-    $('#request').click(handleRequestClick);
-    $('#signOut').click(function() {
-        WildRydes.signOut();
-        alert("You have been signed out.");
-        window.location = "signin.html";
-    });
-    $(WildRydes.map).on('pickupChange', handlePickupChanged);
-
-    WildRydes.authToken.then(function updateAuthMessage(token) {
-        if (token) {
-            displayUpdate('You are authenticated. Click to see your <a href="#authTokenModal" data-toggle="modal">auth token</a>.');
-            $('.authToken').text(token);
-        }
-    });
-
-    if (!_config.api.invokeUrl) {
-        $('#noApiMessage').show();
-    }
-});*/
 
 function displayUpdate(text) {
     $('#updates').append($('<li>' + text + '</li>'));
@@ -314,6 +275,18 @@ function move(result) {
     }
   }
     
+}
+
+function move2(result){
+    completeRequest(result);
+    startUp();
+                
+    if(movies != null){
+        for (i = 1; i <= movies.length; i++) { 
+            if (i == 11) { break; }
+            showAjax(movies[i-1], i);
+        }
+    }
 }
 
 function showAjax(tuple, i) {
