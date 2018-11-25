@@ -246,7 +246,6 @@ function requestShow(pickupLocation) {
     console.log('after ajax');
 }
 
-
 function completeRequest(result) {
     console.log("Response received ", result);
     movies = result;
@@ -291,18 +290,19 @@ function move2(result){
 
 function showAjax(tuple, i) {
     // title (is a string): "('Bose: Dead/Alive', 'tt6883044')('Nobel', 'tt4591834')('Tabula Rasa', 'tt5197860')('The K2', 'tt5966882')('Bajo sospecha', 'tt3825328')
-    var title = tuple[0].replace(/[{' '}]/g,'+');
-    var id = tuple[1].replace(/[{' '}]/g,'');
+    var title = tuple[0].replace(/[{\'}]/g, '');;
+    var id = tuple[1].trim().replace(/[{\'}]/g, '');
 
     $.ajax({
         method: 'GET',
         dataType: 'json',
-        url: 'http://www.omdbapi.com/?t=' + title + '&apikey=98eef2d0',
+        url: 'http://www.omdbapi.com/?i=' + id + '&apikey=98eef2d0',
         success: function(data) {
+            
             var rating = data.imdbRating;
             var place = document.getElementById(i).childNodes[1];
             
-            place.innerHTML = title.replace(/[{'+'}]/g,' ');
+            place.innerHTML = title;
             place.href = 'https://imdb.com/title/'+id;
             
             sessionStorage.setItem(i, id);
@@ -320,19 +320,30 @@ function showAjax(tuple, i) {
 }
 
 function startUp(){
-    movies = JSON.parse(sessionStorage.getItem('movies'))['result'];
-    movies = movies.replace(/[{()}]/g, '');
-    movies = movies.replace(/[{\"}]/g, '\'');
-    movies = movies.split('\'\'');
+    var movieString = JSON.parse(sessionStorage.getItem('movies'))['result'];
+    movieString = movieString.replace(/[{(}]/g, '');
+    movieString = movieString.replace(/[{)}]/g, ',');
+    movieString = movieString.replace(/[{\"}]/g, '');
+    movies = movieString.split(',');
     
     sessionStorage.removeItem('ids');
     
-    for (i = 0; i < movies.length; i++) { 
-        movie = movies[i];
-        movie = movie.replace(/[{\'}]/g, '');
-        movie = movie.split(',');
-
-        movies[i] = movie;
+    var tuples = [];
+    for (i = 0; i < movies.length - 1; i+=2) { 
+        var tuple = [];
+        tuple.push(movies[i]);
+        tuple.push(movies[i+1]);
+        
+        tuples.push(tuple);
+    }
+    console.log(tuples);
+    
+    if(tuples != null){
+        for (i = 1; i <= tuples.length; i++) { 
+            // Stop at 10 movies
+            if (i == 11) { break; }
+            showAjax(tuples[i-1], i);
+        }
     }
 }
 
