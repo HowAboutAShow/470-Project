@@ -16,7 +16,6 @@ function requestMore() {
     for (i in moviesToCheck){
         rank = moviesToCheck[i];
         id = sessionStorage[rank];
-        console.log(id);
         
         $.ajax({
             method: 'POST',
@@ -279,28 +278,21 @@ function move(result) {
 function move2(result){
     completeRequest(result);
     startUp();
-                
-    if(movies != null){
-        for (i = 1; i <= movies.length; i++) { 
-            if (i == 11) { break; }
-            showAjax(movies[i-1], i);
-        }
-    }
 }
 
 function showAjax(tuple, i) {
     // title (is a string): "('Bose: Dead/Alive', 'tt6883044')('Nobel', 'tt4591834')('Tabula Rasa', 'tt5197860')('The K2', 'tt5966882')('Bajo sospecha', 'tt3825328')
     var title = tuple[0].replace(/[{\'}]/g, '');;
-    var id = tuple[1].trim().replace(/[{\'}]/g, '');
 
     $.ajax({
         method: 'GET',
         dataType: 'json',
-        url: 'http://www.omdbapi.com/?i=' + id + '&apikey=98eef2d0',
+        url: 'http://www.omdbapi.com/?t=' + title + '&apikey=98eef2d0',
         success: function(data) {
             
             var rating = data.imdbRating;
             var place = document.getElementById(i).childNodes[1];
+            var id = data.imdbID;
             
             place.innerHTML = title;
             place.href = 'https://imdb.com/title/'+id;
@@ -321,8 +313,10 @@ function showAjax(tuple, i) {
 
 function startUp(){
     var movieString = JSON.parse(sessionStorage.getItem('movies'))['result'];
+    
     movieString = movieString.replace(/[{(}]/g, '');
     movieString = movieString.replace(/[{)}]/g, ',');
+    console.log(movieString);
     movieString = movieString.replace(/[{\"}]/g, '');
     movies = movieString.split(',');
     
@@ -343,6 +337,7 @@ function startUp(){
             // Stop at 10 movies
             if (i == 11) { break; }
             showAjax(tuples[i-1], i);
+            document.getElementById(i).childNodes[0].checked = false;
         }
     }
 }
